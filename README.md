@@ -10,7 +10,6 @@ highlights.
 ### Prerequisites
 * [Python3](https://www.python.org/download/releases/3.0/)
 * [pipenv](https://pypi.org/project/pipenv/)
-* [direnv](https://direnv.net/)
 
 ### Setup
 
@@ -42,14 +41,14 @@ highlights.
 
 ### Usage
 
-1. Create a `.envrc` file in the root of the repo containing your GoodReads User
+1. Create a `.env` file in the root of the repo containing your GoodReads User
    ID and the IFTTT Webhook API key you retrieved above. You can find your
    GoodReads User ID by logging in to your account, going to the
    [My Kindle Highlights Notes & Highlights](https://www.goodreads.com/notes)
    page and then copying the ID that appears in the URL (e.g
    `https://www.goodreads.com/notes/<USER ID>-<NAME>`).
    ```bash
-   $ cat .envrc
+   $ cat .env
 
    GOODREADS_USER_ID=...
    IFTTT_API_KEY=...
