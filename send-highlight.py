@@ -9,8 +9,7 @@ from bs4 import BeautifulSoup
 
 # Check for the required environment variables
 try:
-    goodreadsEmail = os.environ['GOODREADS_EMAIL']
-    goodreadsPassword = os.environ['GOODREADS_PASSWORD']
+    goodreadsUserId = os.environ['GOODREADS_USER_ID']
     iftttApiKey = os.environ['IFTTT_API_KEY']
 except KeyError as e:
     print('Please set the %s environment variable' % e.args[0])
@@ -19,27 +18,8 @@ except KeyError as e:
 # Create a session so that we keep the cookies that we need
 s = requests.Session()
 
-# Login to goodreads (we first have to load the sign in page to get the hidden
-# 'n' and 'authenticity_token' inputs from the sign in form to successfully sign
-# in to the site)
-r = s.get('https://www.goodreads.com/user/sign_in')
-loginPage = BeautifulSoup(r.text, 'html.parser')
-n = loginPage.find('input', { 'name': 'n'}).get('value')
-authenticityToken = loginPage.find('input', { 'name': 'authenticity_token'}).get('value')
-loginData = {
-   'user[email]': goodreadsEmail,
-   'user[password]': goodreadsPassword,
-   'authenticity_token': authenticityToken,
-   'n': n
-}
-r = s.post('https://www.goodreads.com/user/sign_in', data=loginData)
-
-# Get the user ID from the page that loaded
-userFeedUrl = BeautifulSoup(r.text, 'html.parser').find('link', { 'title': 'Goodreads' }).get('href')
-userId = re.search('index_rss/(.+?)\?', userFeedUrl).group(1)
-
-# Now that we are logged in, we can get the list of books that have highlights
-r = s.get('https://www.goodreads.com/notes/%s/load_more' % userId)
+# Get the list of books that have highlights
+r = s.get('https://www.goodreads.com/notes/%s/load_more' % goodreadsUserId)
 print('Found %i books with highlights' % len(r.json()['annotated_books_collection']))
 
 # Get the info and reading notes URL for each book

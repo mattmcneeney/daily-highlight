@@ -2,15 +2,15 @@
 
 Get a daily push notification containing one of your Kindle book highlights!
 
-Your [GoodReads](https://www.goodreads.com/) email address and password are
-unfortunately needed in order to fetch more than 5 books that you have added
-highlights to. Note that this does not use the
+Only your highlights that are set to 'visible' will be retrieved from your
+GoodReads account. Note that this does not use the
 [GoodReads API](https://www.goodreads.com/api) as this does not support getting
 highlights.
 
 ### Prerequisites
 * [Python3](https://www.python.org/download/releases/3.0/)
 * [pipenv](https://pypi.org/project/pipenv/)
+* [direnv](https://direnv.net/)
 
 ### Setup
 
@@ -42,12 +42,16 @@ highlights.
 
 ### Usage
 
-1. Create a `.env` file in the root of the repo containing your GoodReads email,
-   password and the IFTTT Webhook API key you retrieved above containing the
-   following:
+1. Create a `.envrc` file in the root of the repo containing your GoodReads User
+   ID and the IFTTT Webhook API key you retrieved above. You can find your
+   GoodReads User ID by logging in to your account, going to the
+   [My Kindle Highlights Notes & Highlights](https://www.goodreads.com/notes)
+   page and then copying the ID that appears in the URL (e.g
+   `https://www.goodreads.com/notes/<USER ID>-<NAME>`).
    ```bash
-   GOODREADS_EMAIL=...
-   GOODREADS_PASSWORD=...
+   $ cat .envrc
+
+   GOODREADS_USER_ID=...
    IFTTT_API_KEY=...
    ```
 1. To get a highlight sent to you via a push notification, run:
