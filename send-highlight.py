@@ -15,11 +15,8 @@ except KeyError as e:
     print('Please set the %s environment variable' % e.args[0])
     sys.exit(1)
 
-# Create a session so that we keep the cookies that we need
-s = requests.Session()
-
 # Get the list of books that have highlights
-r = s.get('https://www.goodreads.com/notes/%s/load_more' % goodreadsUserId)
+r = requests.get('https://www.goodreads.com/notes/%s/load_more' % goodreadsUserId)
 print('Found %i books with highlights' % len(r.json()['annotated_books_collection']))
 
 # Get the info and reading notes URL for each book
@@ -30,7 +27,7 @@ books = list(map(lambda x: { 'title': x['title'], 'author': x['authorName'], 'hi
 highlights = []
 for book in books:
     print('Fetching highlights for ' + book['title'])
-    r = s.get(book['highlightsUrl'])
+    r = requests.get(book['highlightsUrl'])
     highlights.extend(list(map(lambda x: { 'title': book['title'], 'author': book['author'], 'imageUrl': book['imageUrl'], 'highlight': x.find('span').text }, BeautifulSoup(r.text, 'html.parser').findAll('div', {'class': 'noteHighlightContainer'}))))
 
 print('Total highlights found: %i' % len(highlights))
