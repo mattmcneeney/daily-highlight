@@ -58,9 +58,6 @@ highlights.
    pipenv run python send-highlight.py
    ```
 
-Note that the environmental variables can also be stored in a `.env` file if
-preferred.
-
 ### Getting a daily highlight
 
 To get a highlight sent to you every day, you can use crontab on a device of
