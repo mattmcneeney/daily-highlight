@@ -23,7 +23,7 @@ def sendHighlight(highlight, iftttApiKey):
         'value2': highlight['highlight'],
         'value3': highlight['imageUrl']
     }
-    requests.post('https://maker.ifttt.com/trigger/daily_highlight/with/key/%s' % iftttApiKey, data=data)
+    requests.post('https://maker.ifttt.com/trigger/notification/with/key/%s' % iftttApiKey, data=data)
 
 def main():
    # Check for the required environment variables
